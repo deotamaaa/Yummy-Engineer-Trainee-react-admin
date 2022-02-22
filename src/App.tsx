@@ -1,5 +1,6 @@
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
+import Login from './components/Login';
 import Dashboard from './pages/Dashboard';
 import Register from './pages/Register';
 import Users from './pages/Users';
@@ -11,6 +12,7 @@ function App() {
         <Route path={'/'} exact component={Dashboard} />
         <Route path={'/users'} component={Users} />
         <Route path={'/register'} component={Register} />
+        <Route path={'/login'} component={Login} />
 
 
       </BrowserRouter>
