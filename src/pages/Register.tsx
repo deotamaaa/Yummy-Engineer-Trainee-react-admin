@@ -1,21 +1,26 @@
 import React, { Component, SyntheticEvent } from 'react'
 import '../login.css'
+import axios from 'axios';
+
 export default class Register extends Component {
-    first_name = '';
-    last_name = '';
+    firstName = '';
+    lastName = '';
     email = '';
     password = '';
     password_confirm = '';
 
-    submit = (e: SyntheticEvent) => {
+    submit = async (e: SyntheticEvent) => {
         e.preventDefault();
-        console.log({
-            first_name: this.first_name,
-            last_name: this.last_name,
+
+        const response = await axios.post('http://localhost:8000/api/register', {
+            firstName: this.firstName,
+            lastName: this.lastName,
             email: this.email,
             password: this.password,
             password_confirm: this.password_confirm,
-        })
+        });
+
+        console.log(response);
     }
     render() {
         return (
@@ -23,9 +28,9 @@ export default class Register extends Component {
                 <h1 className="h3 mb-3 font-weight-normal">Please Register</h1>
 
                 <input className="form-control" placeholder="First Name" required
-                    onChange={e => this.first_name = e.target.value} />
+                    onChange={e => this.firstName = e.target.value} />
                 <input className="form-control" placeholder="Last Name" required
-                    onChange={e => this.last_name = e.target.value} />
+                    onChange={e => this.lastName = e.target.value} />
 
                 <input type="email" className="form-control" placeholder="Email address" required
                     onChange={e => this.email = e.target.value} />
