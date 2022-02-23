@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import Menu from './Menu'
@@ -10,9 +10,8 @@ const Wrapper = (props: any) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get('user');
+        // const { data } = await axios.get('user');
       } catch (e) {
-
         setRedirect(true);
       }
     })();
