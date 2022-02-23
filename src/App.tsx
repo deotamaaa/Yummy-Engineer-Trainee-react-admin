@@ -3,7 +3,7 @@ import './App.css';
 import Login from './components/Login';
 import Dashboard from './pages/Dashboard';
 import Register from './pages/Register';
-import Users from './pages/Users';
+import Users from './pages/users/Users';
 
 function App() {
   return (
