@@ -8,6 +8,8 @@ import UserCreate from './pages/users/UserCreate';
 import UserEdit from './pages/users/UserEdit';
 import Users from './pages/users/Users';
 import RoleCreate from './pages/roles/RoleCreate';
+import RolesCreate from './pages/roles/RoleCreate';
+import RolesEdit from './pages/roles/RoleEdit';
 
 function App() {
   return (
@@ -19,8 +21,9 @@ function App() {
         <Route path={'/users'} exact component={Users} />
         <Route path={'/users/create'} component={UserCreate} />
         <Route path={'/users/:id/edit'} component={UserEdit} />
-        <Route path={'/roles'} component={Roles} />
-        <Route path={'/role/create'} component={RoleCreate} />
+        <Route path={'/roles'} exact component={Roles} />
+        <Route path={'/roles/create'} exact component={RolesCreate} />
+        <Route path={'/roles/:id/edit'} exact component={RolesEdit} />
 
 
       </BrowserRouter>
