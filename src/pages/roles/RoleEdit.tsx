@@ -4,15 +4,20 @@ import { Redirect } from 'react-router';
 import Wrapper from '../../components/Wrapper'
 import { Permission } from '../../models/permissions';
 
-export default function RolesCreate() {
+export default function RolesEdit(props: any) {
     const [permissions, setPermissions] = useState([]);
     const [selected, setSelected] = useState([] as number[]);
     const [name, setName] = useState('');
     const [redirect, setRedirect] = useState(false);
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get('permissions');
-            setPermissions(data);
+            const response = await axios.get('permissions');
+            setPermissions(response.data);
+
+            const { data } = await axios.get(`roles/${props.match.params.id}`);
+
+            setName(data.name);
+            setSelected(data.permissions.map((p: Permission) => p.id));
         })();
     }, []);
 
@@ -27,7 +32,7 @@ export default function RolesCreate() {
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await axios.post('roles', {
+        await axios.put(`roles/${props.match.params.id}`, {
             name,
             permissions: selected,
         });
@@ -44,7 +49,9 @@ export default function RolesCreate() {
                 <div className="mb-3 mt-3 row">
                     <label className="col-form-label col-sm-2">User Name</label>
                     <div className="col-sm-10">
-                        <input className="form-control" onChange={e => setName(e.target.value)} />
+                        <input className="form-control"
+                            defaultValue={name}
+                            onChange={e => setName(e.target.value)} />
                     </div>
                 </div>
                 <div className="mb-3 row">
@@ -56,6 +63,7 @@ export default function RolesCreate() {
                                     key={p.id}>
                                     <input className="form-check-input" type="checkbox"
                                         value={p.id}
+                                        checked={selected.some(s => s === p.id)}
                                         onChange={() => check(p.id)} />
                                     <label className="form-check-label">{p.name}</label>
                                 </div>
