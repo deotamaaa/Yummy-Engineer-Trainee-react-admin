@@ -5,10 +5,21 @@ import Wrapper from '../../components/Wrapper'
 import { Order } from '../../models/order';
 import { OrderItem } from '../../models/order-item';
 
+const hide = {
+    maxHeight: '0',
+    transition: '500ms ease-in',
+}
+
+const show = {
+    maxHeight: "150px",
+    transition: '500ms ease-out',
+}
+
 export default function Orders() {
     const [orders, setOrders] = useState([]);
     const [page, setPage] = useState(1);
     const [lastPage, setLastPage] = useState(0);
+    const [selected, setSelected] = useState(0);
 
     useEffect(() => {
         (async () => {
@@ -16,11 +27,15 @@ export default function Orders() {
             setOrders(data.data);
             setLastPage(data.meta.last_page);
         })()
-    }, [page])
+    }, [page]);
+
+    const select = (id: number) => {
+        setSelected(selected === id ? 0 : id);
+    }
     return (
         <Wrapper>
             <div className="table-responsive">
-                <table className="table table-striped table-sm">
+                <table className="table table-sm">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -40,11 +55,12 @@ export default function Orders() {
                                         <td>{o.email}</td>
                                         <td>{o.total}</td>
                                         <td><a href="#" className="btn btn-sm btn-outline-secondary"
+                                            onClick={() => select(o.id)}
                                         >View</a></td>
                                     </tr>
                                     <tr>
                                         <td colSpan={5}>
-                                            <div>
+                                            <div className="overflow-hidden" style={selected === o.id ? show : hide}>
                                                 <table className="table table-sm">
                                                     <thead>
                                                         <tr>
