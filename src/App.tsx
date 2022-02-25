@@ -10,6 +10,7 @@ import Users from './pages/users/Users';
 import RolesCreate from './pages/roles/RoleCreate';
 import RolesEdit from './pages/roles/RoleEdit';
 import Products from './pages/products/Products';
+import ProductCreate from './pages/products/ProductCreate';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path={'/roles/create'} exact component={RolesCreate} />
         <Route path={'/roles/:id/edit'} exact component={RolesEdit} />
         <Route path={'/products'} exact component={Products} />
+        <Route path={'/products/create'} exact component={ProductCreate} />
 
 
       </BrowserRouter>

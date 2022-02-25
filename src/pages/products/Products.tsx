@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import Paginator from '../../components/Paginator';
 import Wrapper from '../../components/Wrapper'
 import { Product } from '../../models/product';
 
@@ -20,17 +21,7 @@ export default function Products() {
         )()
     }, [page])
 
-    const next = () => {
-        if (page < lastPage) {
-            setPage(page + 1);
-        }
-    }
 
-    const prev = () => {
-        if (page >= 1) {
-            setPage(page - 1);
-        }
-    }
 
     const del = async (id: number) => {
         if (window.confirm(`Are you sure you want to delete this record ?`)) {
@@ -41,6 +32,9 @@ export default function Products() {
 
     return (
         <Wrapper>
+            <div className="pt-3 pb-2 mb-3 border-bottom">
+                <Link to="/products/create" className="btn btn-sm btn-outline-secondary">Add</Link>
+            </div>
             <div className="table-responsive">
                 <table className="table table-striped table-sm">
                     <thead>
@@ -80,16 +74,7 @@ export default function Products() {
                     </tbody>
                 </table>
             </div>
-            <nav>
-                <ul className="pagination">
-                    <li className="page-item">
-                        <a className="page-link" href='#' onClick={prev}>Previous</a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href='#' onClick={next}>Next</a>
-                    </li>
-                </ul>
-            </nav>
+            <Paginator lastPage={lastPage} pageChanged={setPage} page={page} />
         </Wrapper>
     )
 }
