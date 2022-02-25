@@ -1,8 +1,11 @@
-
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import Menu from './Menu'
 import Nav from './nav'
+import { connect } from 'react-redux';
+import { User } from '../models/user';
+import { setUser } from '../redux/actions/setUserAction';
+import axios from 'axios';
 
 const Wrapper = (props: any) => {
   const [redirect, setRedirect] = useState(false);
@@ -10,7 +13,14 @@ const Wrapper = (props: any) => {
   useEffect(() => {
     (async () => {
       try {
-        // const { data } = await axios.get('user');
+        const { data } = await axios.get('user');
+        props.setUser(new User(
+          data.id,
+          data.firstName,
+          data.lastName,
+          data.email,
+          data.role,
+        ));
       } catch (e) {
         setRedirect(true);
       }
@@ -35,5 +45,18 @@ const Wrapper = (props: any) => {
   )
 }
 
-export default Wrapper;
+const mapStateToProps = (state: { user: User }) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  return {
+    setUser: (user: User) => dispatch(setUser(user))
+  }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wrapper);
 
